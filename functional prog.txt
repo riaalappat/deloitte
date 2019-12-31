@@ -1,0 +1,35 @@
+//  items.stream().filter(s->s.length()>4)
+
+//  items.stream().filter(s->s.length()>4).map(s->s.toUpperCase()).forEach(s->s.o.p(s))
+
+
+package com.deloitte;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Stack;
+import java.util.ArrayDeque;
+
+
+public class CollectionDemo {
+	
+	
+	
+	public static void main(String[] args) {
+		
+		List<Integer> nums =Arrays.asList(1999,2020,1991,2016);
+		
+		nums.stream().filter(i->((i%400==0) || (i%4==0)&&(i%100!=0))).forEach(s->System.out.println(s));
+		
+		
+				}
+		
+	}
+
+
