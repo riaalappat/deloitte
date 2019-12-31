@@ -1,0 +1,26 @@
+
+
+package com.deloitte;
+import java.util.*;
+
+
+public class HM {
+	
+	
+	public static void main(String[] args) {
+		
+		Map<String,String> trainees=new HashMap<>();
+		trainees.put("Aasir","Jamshedpur");
+		trainees.put("Abhi","Chennai");
+		trainees.put("Tony","Delhi");
+		trainees.put("Vicky","Mumbai");
+		
+		
+		for(String key:trainees.keySet()) {
+			System.out.println("Name:"+key+"\tlocation:"+trainees.get(key));
+		}
+		
+	}
+	
+
+}
