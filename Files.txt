@@ -1,0 +1,190 @@
+Files:
+
+package com.deloitte;
+import java.io.*;
+
+public class FileOperations {
+	public static void main(String[] args) {
+		
+	
+	
+	try{ 
+		
+		File file=new File("hello.txt");
+		FileInputStream fin=new FileInputStream(file);
+		int c;
+		while((c=fin.read())!=-1){
+			System.out.print((char)c);
+		}
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+
+}
+}
+
+//...........................................reader type
+package com.deloitte;
+import java.io.*;
+
+public class FileOperations {
+	public static void main(String[] args) {
+		
+	
+	
+	try{ 
+		
+		File file=new File("C:\\Users\\Admin\\Desktop\\j.txt");
+		//FileInputStream fin=new FileInputStream(file);
+		FileReader fin=new FileReader(file);
+		int c;
+		while((c=fin.read())!=-1){
+			System.out.print((char)c);
+		}
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+
+}
+}
+
+
+
+
+
+//...........................................readLine()
+package com.deloitte;
+import java.io.*;
+
+public class FileOperations {
+	public static void main(String[] args) {
+		
+	
+	
+	try{ 
+		
+		File file=new File("C:\\Users\\Admin\\Desktop\\j.txt");
+		FileReader fin=new FileReader(file);
+		BufferedReader br=new BufferedReader(fin);
+		String line;
+		while((line=br.readLine())!=null) {
+			System.out.println(line);
+		}
+		
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+
+}
+}
+
+
+.....................................write..............
+File file2=new File("file1.txt");
+		FileWriter fout=new FileWriter(file2);
+		BufferedWriter bw=new BufferedWriter(fout);
+		
+		String line;
+		while((line=br.readLine())!=null) {
+			if(line.length()>10) {
+			bw.write(line+"\n");
+		}
+		
+	}
+		br.close();
+		bw.close();
+	}
+
+........................................................................
+package com.deloitte;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+public class FileOperations {
+	public static void main(String[] args) {
+		
+	
+	
+	try{ 
+		
+		Files.list(Paths.get(".")).filter(s->s.toString().endsWith(".txt")).forEach(System.out::println);
+		
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+
+}
+}
+
+...........................................................................
+package com.deloitte;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class FileOperations {
+	public static void main(String[] args) throws Exception {
+		
+		FileInputStream fin=null;
+		ObjectInputStream ois=null;
+		FileOutputStream fout=null;
+		ObjectOutputStream oos=null;
+		
+		
+	try{ 
+		Employee emp=new Employee(101,"Samir",50000);
+		
+		fout=new FileOutputStream("emp.txt");
+		oos= new ObjectOutputStream (fout);
+		
+		oos.writeObject(emp);
+	
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+	finally {
+		oos.close();
+		fout.close();
+	}
+	
+	
+	try{ 
+		fin=new FileInputStream("emp.txt");
+		ois= new ObjectInputStream (fin);
+		Employee emp=(Employee)ois.readObject();
+		System.out.println(emp);
+	}
+	catch(Exception ex) {
+		System.out.print(ex);
+		
+	}
+	finally {
+		ois.close();
+		fin.close();
+	}
+	
+	
+	
+	
+}
+}
+
+
+	
+}
+}
+
+

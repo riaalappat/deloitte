@@ -1,0 +1,178 @@
+package com.delo;
+import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.Connection;
+
+
+public class EmOp {
+	public static void main(String[] args) {
+		try{ 
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
+				if(con!=null) {
+			System.out.println("Connection successful");
+			Statement smt=con.createStatement();
+			ResultSet rs=smt.executeQuery("select * from emp ");
+			System.out.println("EMP IDS      EMP NAMES");
+			while(rs.next()) 
+			{
+				System.out.println(rs.getInt(1)+"                "+rs.getString(2));
+				
+			}
+			}
+			
+			
+		}
+				
+		
+		catch(Exception e) {
+			System.out.println(e);
+			
+		}
+		
+		
+		
+	}
+
+}
+................................................................................
+
+package com.delo;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.Connection;
+
+public class EmpOp1 {
+
+	public static void main(String[] args) {
+			try {
+				BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+				Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
+				if(con!=null) {
+					Statement smt=con.createStatement();
+					int r=smt.executeUpdate("insert into dept values(50,'Testing','Bangalore')");
+					if (r>0) {
+						System.out.println("data inserted");
+					}
+				}
+							
+			
+			}
+				
+				
+			catch(Exception e) {
+				System.out.println(e);
+				
+			}
+			
+			
+			
+		}
+
+}
+.................................................................................
+package com.delo;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.*;
+import java.sql.PreparedStatement;
+
+public class EmpOp2 {
+	
+	public static void main(String[] args) {
+		
+			try 
+			{
+				
+				
+				BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+				Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
+				if(con!=null) 
+				{
+					//Statement smt=con.createStatement();
+					System.out.println("Successful");
+	
+				}
+				int NO=Integer.parseInt(br.readLine());
+				String NAME=br.readLine();
+				String LOC=br.readLine();
+				
+				PreparedStatement psmt=con.prepareStatement("insert into dept values(?,?,?)");
+				
+				psmt.setInt(1,NO);
+				psmt.setString(2,NAME);
+				psmt.setString(3,LOC);
+				
+				int r=psmt.executeUpdate();
+				if(r>0) {
+					System.out.println(r+"Data inserted");
+				}
+				
+			}
+			catch(Exception e) {
+				System.out.println(e);
+				
+			}
+	
+
+}
+}
+
+.......................................UPDATE..........................................
+package com.delo;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.*;
+import java.sql.PreparedStatement;
+
+public class EmpOp3 {
+
+		public static void main(String[] args) {
+			
+				try 
+				{
+					
+					
+					BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+					Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
+					if(con!=null) 
+					{
+						//Statement smt=con.createStatement();
+						System.out.println("Successful");
+		
+					}
+					
+					System.out.println("Enter deptno to update:");
+					int NO=Integer.parseInt(br.readLine());
+					System.out.println("Enter dname and location:");
+					String n=br.readLine();
+					String l=br.readLine();
+					
+					PreparedStatement psmt=con.prepareStatement("update dept set dname=?,location=? where deptno=?");
+					
+					
+					psmt.setString(1,n);
+					psmt.setString(2,l);
+					psmt.setInt(3,NO);
+					
+					int r=psmt.executeUpdate();
+					if(r>0) {
+						System.out.println("Data updated");
+					}
+					
+				}
+				catch(Exception e) {
+					System.out.println(e);
+					
+				}
+		
+
+	}
+	}
+
+
+
+
