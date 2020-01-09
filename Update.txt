@@ -1,0 +1,171 @@
+...................showall.jsp....................................
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%> <!DOCTYPE html>
+      <%@ page import="com.deloitte.estore.model.Product" %>
+         <%@ page import="java.util.List" %>
+       
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<%
+List<Product> products=(List<Product>)session.getAttribute("products");
+%>
+<table border="1">
+<tr>
+<th>Product ID </th>
+<th>Product Name</th>
+<th>Price</th>
+<th>Delete</th>
+<th>Update</th>
+</tr>
+<%
+for(Product p:products)
+{
+	out.println("<tr><td>"+p.getPID()+"</td>");
+	out.println("<td>"+p.getPNAME()+"</td>");
+	out.println("<td>" +p.getPRICE()+ "</td>");
+	out.println("<td><a href=delete?pid="+p.getPID()+">Delete</a></td>");
+	out.println("<td><a href=updatetab?pid="+p.getPID()+">Update</a></td></tr>");}
+%>
+</table>
+
+</body>
+</html>
+
+.................................................addproduct.jsp.........................
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+<form action="addproduct" method="post">
+Enter product id:<input type="number" name="pid"><br>
+Enter product name:<input type="text"name="pname">
+Enter product price:<input type="text"name="price">
+<input type="submit" value="save">
+</form>
+
+
+
+</body>
+</html>
+...................................updateProduct.java............................
+
+package com.deloitte.estore.controller;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.deloitte.estore.model.Product;
+import com.deloitte.estore.service.ProductService;
+import com.deloitte.estore.service.ProductServicImpl;
+
+@WebServlet("/update")
+public class UpdateProduct extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int prodId = Integer.parseInt(request.getParameter("pid"));
+		ProductService service = new ProductServicImpl();
+		Product product;
+		try {
+			product = service.getProductById(prodId);
+			request.getSession().setAttribute("product", product);
+			response.sendRedirect("updatetab.jsp");
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+
+......................................showUpdate.java.................
+
+package com.deloitte.estore.controller;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.deloitte.estore.model.Product;
+import com.deloitte.estore.service.ProductServicImpl;
+import com.deloitte.estore.service.ProductService;
+
+
+@WebServlet("/updatedata")
+public class ShowUpdate extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+  
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int pid = Integer.parseInt(request.getParameter("uid"));
+		String pname =request.getParameter("uname");
+		float price = Float.parseFloat(request.getParameter("uprice"));
+		Product product = new Product (pid,pname,price);
+		ProductService ps = new ProductServicImpl();
+		try {
+			if(ps.updateProduct(product)) {
+				response.sendRedirect("Success.jsp");
+			}
+		}catch (Exception e) {
+		System.out.println(e);
+		}
+	}
+
+}
+
+
+	
+................................................updatetab.jsp...................
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="com.deloitte.estore.model.Product" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<% Product product =(Product)session.getAttribute("product");%>
+
+
+<form action = "updatedata">
+
+Product Id <input type = "text" name = "uid" value = <%=product.getPID()%> readonly><br>
+<!--Product Id <input type = "text" value=${product}.getPid() readonly><br> -->
+
+Product Name <input type = "text" name = "uname" value = <%=product.getPNAME()%>><br>
+
+Product Price <input type = "text" name = "uprice" value = <%=product.getPRICE()%>><br>
+
+<input type="submit" value="Update">
+</form>
+</body>
+</html>
+
+
+	
+		
